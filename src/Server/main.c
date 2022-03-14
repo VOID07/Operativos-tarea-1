@@ -168,29 +168,32 @@ void route()
         printf("HTTP/1.1 200 OK\r\n\r\n");
         // printf("Wow, seems that you POSTED %lld bytes: \n %s. \r\n", payload_size, payload);
         printf("Wow, seems that you POSTED %lld bytes: \n. \r\n", payload_size);
-        unsigned char *buff = (unsigned char *)malloc(sizeof(char) * payload_size);
+        // payload = strtok(NULL, "\r\n");
+        clean_string(payload);
+        printf("%s \n. \r\n", payload);
+        // unsigned char *buff = (unsigned char *)malloc(sizeof(char) * payload_size);
 
-        payload = strtok(NULL, "\r\n");
-        payload = strtok(NULL, "\r\n");
-        buff = strtok(NULL, "\r\n");
-        printf(" %s\n", payload);
-        fprintf(stderr, "%s\r\n", payload);
-        fprintf(stderr, "Image %s\r\n", buff);
+        // payload = strtok(NULL, "\r\n");
+        // payload = strtok(NULL, "\r\n");
+        // buff = strtok(NULL, "\r\n");
+        // printf(" %s\n", payload);
+        // fprintf(stderr, "%s\r\n", payload);
+        // fprintf(stderr, "Image %s\r\n", buff);
 
-        // char * file = (char *) malloc(sizeof(char)*payload_size);
-        // parse_object(payload);
-        fprintf(stderr, "200 OK :D\n");
-        FILE *fptr;
-        if ((fptr = fopen("imagen.jpg", "wb")) == NULL)
-        {
-            printf("Error! opening file");
+        // // char * file = (char *) malloc(sizeof(char)*payload_size);
+        // // parse_object(payload);
+        // fprintf(stderr, "200 OK :D\n");
+        // FILE *fptr;
+        // if ((fptr = fopen("imagen.jpg", "wb")) == NULL)
+        // {
+        //     printf("Error! opening file");
 
-            // Program exits if the file pointer returns NULL.
-            exit(1);
-        }
-        fwrite(&buff, sizeof(buff), sizeof(buff)/sizeof(buff[0]), fptr);
-        // sizeof(x[0]), sizeof(x)/sizeof(x[0])
-        fclose(fptr); 
+        //     // Program exits if the file pointer returns NULL.
+        //     exit(1);
+        // }
+        // fwrite(&buff, sizeof(buff), sizeof(buff)/sizeof(buff[0]), fptr);
+        // // sizeof(x[0]), sizeof(x)/sizeof(x[0])
+        // fclose(fptr); 
     }
 
     ROUTE_POST("/test")

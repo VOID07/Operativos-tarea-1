@@ -149,7 +149,7 @@ void respond(int n)
 //  char *ptr;
   int buf_size = 10000000;
 
-  buf = malloc(buf_size);
+   buf = malloc(buf_size*sizeof(char));
   rcvd = recv(clients[n], buf, buf_size, 0);
 
   if (rcvd < 0) // receive error

@@ -1,0 +1,2 @@
+PORT=8080
+FOLDER=/home/pablo/Documents/operativos/tarea1/

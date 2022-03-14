@@ -4,5 +4,3 @@ RUN gcc imageproc.c -o  imageproc -lm
 COPY . /ImageServer
 WORKDIR /ImageServer/
 CMD ["./imageproc"]
-
-

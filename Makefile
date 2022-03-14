@@ -1,6 +1,5 @@
 # template for makefiles
 
-
 output: main.o #name of the executable - change every time a group of files change
 	gcc main.o -o output
 

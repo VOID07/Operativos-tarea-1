@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "libeom.h": "c",
+        "httpserver.h": "c"
+    }
+}

@@ -45,6 +45,9 @@ int main()
 
     cJSON_AddStringToObject(json, "filename", "dog.jpg");
     cJSON_AddNumberToObject(json, "pixel", 133);
+    cJSON_AddNumberToObject(json, "width", width);
+    cJSON_AddNumberToObject(json, "height", height);
+    cJSON_AddNumberToObject(json, "channels", channels);
     cJSON_AddStringToObject(json, "content-base64", base64);
 
     char *jsonString = cJSON_Print(json);

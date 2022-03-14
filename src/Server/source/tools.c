@@ -1,6 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 
 #include "../header/tools.h"
 #include "../header/cJSON.h"
@@ -19,7 +24,7 @@ int getlen(char line[])
 
 void parse_object(char *string)
 {
-    clean_string(string);    
+    clean_string(string);
     cJSON *json = cJSON_Parse(string);
 
     cJSON *filename = NULL;
@@ -31,10 +36,18 @@ void parse_object(char *string)
     content_base64 = cJSON_GetObjectItem(json, "content-base64");
     char *content = content_base64->valuestring;
     long long sizeDecoded = Base64decode_len(content);
-    char *image = (char*) malloc(sizeDecoded*sizeof(content[0]));
+    char *image = (char *)malloc(sizeDecoded * sizeof(content[0]));
+
+    int  width, height, channels;
+    width = cJSON_GetObjectItem(json, "width")->valueint;
+    height = cJSON_GetObjectItem(json, "height")->valueint;
+    channels = cJSON_GetObjectItem(json, "channels")->valueint;
 
     Base64decode(image, content);
     printf("Decoded content: %s\r\n", image);
+
+    // stbi_write_png(filename, width, height, channels, image, width * channels);
+    stbi_write_jpg(filename, width, height, channels, image, 100);
     // char *systemCall = (char*)malloc((strlen(image->valuestring) + 100) * sizeof(char));
     // int res = 0;
 

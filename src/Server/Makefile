@@ -5,7 +5,7 @@
 # 	gcc Server.o -o httpServer
 
 main: main.o base64.o cJSON.o httpd.o tools.o
-	gcc main.o base64.o cJSON.o httpd.o tools.o -lm -o main
+	gcc main.o base64.o cJSON.o httpd.o tools.o -o main
 
 main.o: main.c
 	gcc -c main.c -o main.o 
@@ -20,7 +20,7 @@ httpd.o: ./source/httpd.c ./header/httpd.h
 	gcc -c ./source/httpd.c -o httpd.o
 
 tools.o: ./source/tools.c ./header/tools.h
-	gcc -c ./source/tools.c -o tools.o
+	gcc -c ./source/tools.c -lm -o tools.o
 	
 clean: # remove all the output files
 	rm -r *.o

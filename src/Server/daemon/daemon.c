@@ -65,7 +65,7 @@ int main(void) {
     while (1) {
         /* Do some task here ... */
         printf("success \n");
-        fptr = fopen("/home/pablo/Documents/operativos/tarea1/texttest.txt","a");
+        fptr = fopen("/home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/daemon/logs/texttest.txt","a");
         fprintf(fptr, "success \n");
         fclose(fptr);
         sleep(3); /* wait 3 seconds */

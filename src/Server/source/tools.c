@@ -35,7 +35,7 @@ void parse_object(char *string)
 
     Base64decode(image, content);
     printf("Decoded content: %s\r\n", image);
-    // char *systemCall = (char *)malloc((strlen(image->valuestring) + 100) * sizeof(char));
+    // char *systemCall = (char*)malloc((strlen(image->valuestring) + 100) * sizeof(char));
     // int res = 0;
 
     // if (operation->valueint)

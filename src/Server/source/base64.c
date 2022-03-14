@@ -176,7 +176,7 @@ int Base64encode_len(int len)
     return ((len + 2) / 3 * 4) + 1;
 }
 
-int Base64encode(char *encoded, const char *string, int len)
+int Base64encode(char *encoded, const char *string, size_t len)
 {
     int i;
     char *p;

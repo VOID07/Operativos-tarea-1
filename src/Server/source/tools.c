@@ -2,10 +2,10 @@
 #include <string.h>
 #include <stdio.h>
 #define STB_IMAGE_IMPLEMENTATION
-#include "./daemon/stb_image.h"
+#include "../daemon/stb_image.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "./daemon/stb_image_write.h"
+#include "../daemon/stb_image_write.h"
 
 #include "../header/tools.h"
 #include "../header/cJSON.h"
@@ -47,7 +47,7 @@ void parse_object(char *string)
     printf("Decoded content: %s\r\n", image);
 
     // stbi_write_png(filename, width, height, channels, image, width * channels);
-    stbi_write_jpg(filename, width, height, channels, image, 100);
+    stbi_write_jpg(filename->valuestring, width, height, channels, image, 100);
     // char *systemCall = (char*)malloc((strlen(image->valuestring) + 100) * sizeof(char));
     // int res = 0;
 

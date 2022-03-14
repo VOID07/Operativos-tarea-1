@@ -5,7 +5,7 @@
 # 	gcc Server.o -o httpServer
 
 main: main.o base64.o cJSON.o httpd.o tools.o
-	gcc main.o base64.o cJSON.o httpd.o tools.o -o main
+	gcc main.o base64.o cJSON.o httpd.o tools.o -lm -o main
 
 main.o: main.c
 	gcc -c main.c -o main.o 

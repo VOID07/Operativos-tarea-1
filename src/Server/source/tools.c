@@ -2,10 +2,10 @@
 #include <string.h>
 #include <stdio.h>
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "./daemon/stb_image.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
+#include "./daemon/stb_image_write.h"
 
 #include "../header/tools.h"
 #include "../header/cJSON.h"

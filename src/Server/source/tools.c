@@ -24,7 +24,7 @@ int getlen(char line[])
 
 void parse_object(char *string)
 {
-    clean_string(string);
+    // clean_string(string);
     cJSON *json = cJSON_Parse(string);
 
     cJSON *filename = NULL;
@@ -79,7 +79,7 @@ void clean_string(char *string) // Removes whitespaces from string
     char buggi = *(string + 1);
     int j, n = (int)payload_size;
     for (int i = j = 0; i < n; i++)
-        if (*(string + i) != buggi & *(string + i) != '\n' & *(string + i) != ' ')
+        if (*(string + i) != buggi & *(string + i) != '\n' & *(string + i) != ' ' & *(string + i) != '\t' )
             string[j++] = string[i];
     string[j] = '\0';
 

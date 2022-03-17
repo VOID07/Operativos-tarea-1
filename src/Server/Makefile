@@ -23,6 +23,6 @@ tools.o: ./source/tools.c ./header/tools.h
 	gcc -c ./source/tools.c -I. -o tools.o
 	
 clean: # remove all the output files
-	rm -r *.o
+	rm -r *.o & rm -r main
 
 # gcc main.c ./source/base64.c ./source/cJSON.c ./source/httpd.c ./source/tools.c -o server

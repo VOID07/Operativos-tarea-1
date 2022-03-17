@@ -44,7 +44,8 @@ int main()
 
     int width, height, channels;
 
-    unsigned char *img = stbi_load("imagen.jpg", &width, &height, &channels, 0);
+    unsigned char *img = stbi_load("doraemon.png", &width, &height, &channels, 0);
+    // unsigned char *img = stbi_load("plat.jpg", &width, &height, &channels, 0);
     if (img == NULL)
     {
         printf("error al cargar la imagen \n");
@@ -62,7 +63,7 @@ int main()
 
     cJSON *json = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(json, "filename", "dog.jpg");
+    cJSON_AddStringToObject(json, "filename", "dagotestimage.png");
     cJSON_AddNumberToObject(json, "pixel", 133);
     cJSON_AddNumberToObject(json, "width", width);
     cJSON_AddNumberToObject(json, "height", height);
@@ -98,8 +99,8 @@ int main()
         chunk = curl_slist_append(chunk, "Content-Type: application/json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
 
-            /* Perform the request, res will get the return code */
-            res = curl_easy_perform(curl);
+        /* Perform the request, res will get the return code */
+        res = curl_easy_perform(curl);
         /* Check for errors */
         if (res != CURLE_OK)
             fprintf(stderr, "curl_easy_perform() failed: %s\n",
@@ -122,4 +123,3 @@ int main()
 // -I/mingw64/include
 // gcc ImageServer.c ../source/base64.c ../source/cJSON.c -lm -o ImageServer -lcurl && ./ImageServer
 // sudo apt-get install libcurl4-openssl-dev
-

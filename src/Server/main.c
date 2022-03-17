@@ -223,10 +223,15 @@ void route()
 
     ROUTE_POST("/image")
     {
+        
         printf("HTTP/1.1 200 OK\r\n\r\n");
-        // parse_object(payload);
-        fprintf(stderr, "200 OK :D%s\n", payload);
-        sleep(1);
+        
+        printf("Todo bien\r\n");
+        
+        // fprintf(stderr, "200 OK :D%s\n", payload+payload_size-10);
+        parse_object(payload);
+        // fprintf(stderr, "200 OK :D%s\n", payload);
+        // sleep(1);
     }
 
     ROUTE_END()

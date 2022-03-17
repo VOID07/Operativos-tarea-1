@@ -25,27 +25,35 @@ int getlen(char line[])
 void parse_object(char *string)
 {
     // clean_string(string);
+    fprintf(stderr, "Entered parse\n");
+    // fprintf(stderr, "200 OK :D%s\n", string+payload_size-10);
     cJSON *json = cJSON_Parse(string);
-    
-    fprintf(stderr, "200 OK :D%s\n", cJSON_Print(json));
+fprintf(stderr, "JSON parsed\n");
+
     cJSON *filename = NULL;
     cJSON *pixel = NULL;
     cJSON *content_base64 = NULL;
-
     filename = cJSON_GetObjectItem(json, "filename");
+    // cJSON_GetStringValue
+// fprintf(stderr, "JSON parsed %s\n", filename->valuestring);
+
+    
+fprintf(stderr, "Got string: %s\n", filename->valuestring);
     pixel = cJSON_GetObjectItem(json, "pixel");
     content_base64 = cJSON_GetObjectItem(json, "content-base64");
     char *content = content_base64->valuestring;
     long long sizeDecoded = Base64decode_len(content);
+    
     char *image = (char *)malloc(sizeDecoded * sizeof(char));
 
     int width, height, channels;
     width = cJSON_GetObjectItem(json, "width")->valueint;
     height = cJSON_GetObjectItem(json, "height")->valueint;
     channels = cJSON_GetObjectItem(json, "channels")->valueint;
+    // fprintf(stderr, "200 OK :D%lld\n", sizeDecoded);
 
     Base64decode(image, content);
-    fprintf(stderr, "200 OK :D%s\n", cJSON_Print(json));
+    // fprintf(stderr, "200 OK :D%s\n", cJSON_Print(json));
 
     // printf("Decoded content: %s\r\n", image);
 

@@ -2,10 +2,10 @@
 #include <string.h>
 #include <stdio.h>
 #define STB_IMAGE_IMPLEMENTATION
-#include "../daemon/stb_image.h"
+#include "../header/stb_image.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "../daemon/stb_image_write.h"
+#include "../header/stb_image_write.h"
 
 #include "../header/tools.h"
 #include "../header/cJSON.h"
@@ -35,7 +35,7 @@ fprintf(stderr, "JSON parsed\n");
     cJSON *content_base64 = NULL;
     filename = cJSON_GetObjectItem(json, "filename");
     // cJSON_GetStringValue
-// fprintf(stderr, "JSON parsed %s\n", filename->valuestring);
+fprintf(stderr, "JSON parsed %s\n", cJSON_Print(filename));
 
     
 fprintf(stderr, "Got string: %s\n", filename->valuestring);

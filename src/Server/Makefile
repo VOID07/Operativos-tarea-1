@@ -4,11 +4,11 @@
 # httpServer: main.o #name of the executable - change every time a group of files change
 # 	gcc Server.o -o httpServer
 
-main: main.o base64.o cJSON.o httpd.o tools.o
-	gcc main.o base64.o cJSON.o httpd.o tools.o -lm -o main
+ImageServer: ImageServer.o base64.o cJSON.o httpd.o tools.o
+	gcc ImageServer.o base64.o cJSON.o httpd.o tools.o -lm -o ImageServer
 
-main.o: main.c
-	gcc -c main.c -o main.o 
+ImageServer.o: ImageServer.c
+	gcc -c ImageServer.c -o ImageServer.o 
 
 base64.o: source/base64.c ./header/base64.h
 	gcc -c source/base64.c -o base64.o
@@ -23,6 +23,6 @@ tools.o: ./source/tools.c ./header/tools.h
 	gcc -c ./source/tools.c -I. -o tools.o
 	
 clean: # remove all the output files
-	rm -r *.o & rm -r main
+	rm -r *.o & rm -r ImageServer
 
 # gcc main.c ./source/base64.c ./source/cJSON.c ./source/httpd.c ./source/tools.c -o server

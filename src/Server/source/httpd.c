@@ -1,7 +1,7 @@
 #include "../header/httpd.h"
 
 #include <arpa/inet.h>
-//#include <fcntl.h>
+#include <fcntl.h>
 #include <netdb.h>
 #include <signal.h>
 #include <stdio.h>
@@ -58,6 +58,7 @@ void serve_forever(const char *PORT)
     {
       perror("accept() error");
       exit(1);
+      // continue;
     }
     else
     {
@@ -99,6 +100,7 @@ void start_server(const char *port)
   {
     int option = 1;
     listenfd = socket(p->ai_family, p->ai_socktype, 0);
+    // fcntl(listenfd, F_SETFL, O_NONBLOCK);
     setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
     if (listenfd == -1)
       continue;
@@ -149,8 +151,14 @@ void respond(int n)
 //  char *ptr;
   int buf_size = 10000000;
 
-  buf = malloc(buf_size*sizeof(char));
+  buf = calloc(buf_size,sizeof(char));
+  printf("%d",buf[0] );
   rcvd = recv(clients[n], buf, buf_size, 0);
+  // int iter = 0;
+  // while(iter<10){
+  //   rcvd = recv(clients[n], &buf[65536*iter], 65536, 0);
+  //   iter++;
+  // }
 
   if (rcvd < 0) // receive error
     fprintf(stderr, ("recv() error\n"));
@@ -221,6 +229,7 @@ void respond(int n)
   }
 
   // Closing SOCKET
+    // sleep(10); 
   shutdown(
       clientfd,
       SHUT_RDWR); // All further send and recieve operations are DISABLED...

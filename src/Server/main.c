@@ -165,32 +165,45 @@ void route()
     ROUTE_POST("/")
     {
 
-        printf("HTTP/1.1 200 OK\r\n\r\n");
+        
+        // printf("HTTP/1.1 100 Continue\r\n\r\n");
+        printf("HTTP/2 200 \r\n\r\n");
+        // sleep(5);
+        // printf("Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n");
+        // printf("Content-Length: 202611\r\n");
+        // printf("Connection: keep-alive\r\n\r\n");
+        // printf("Connection: Keep-Alive\r\n\r\n");
+        // printf("Keep-Alive: timeout=300\r\n\r\n");
+        // printf("Completed upload\r\n");
         // printf("Wow, seems that you POSTED %lld bytes: \n %s. \r\n", payload_size, payload);
-        printf("Wow, seems that you POSTED %lld bytes: \n. \r\n", payload_size);
-        unsigned char *buff = (unsigned char *)malloc(sizeof(char) * payload_size);
+        // printf("Wow, seems that you POSTED %lld bytes: \n. \r\n", payload_size);
+        // payload = strtok(NULL, "\r\n");
+        // clean_string(payload);
+        // printf("%s \r\n", payload);
+        fprintf(stderr, "200 OK :D%s\n", payload);
+        // unsigned char *buff = (unsigned char *)malloc(sizeof(char) * payload_size);
 
-        payload = strtok(NULL, "\r\n");
-        payload = strtok(NULL, "\r\n");
-        buff = strtok(NULL, "\r\n");
-        printf(" %s\n", payload);
-        fprintf(stderr, "%s\r\n", payload);
-        fprintf(stderr, "Image %s\r\n", buff);
+        // payload = strtok(NULL, "\r\n");
+        // payload = strtok(NULL, "\r\n");
+        // buff = strtok(NULL, "\r\n");
+        // printf(" %s\n", payload);
+        // fprintf(stderr, "%s\r\n", payload);
+        // fprintf(stderr, "Image %s\r\n", buff);
 
-        // char * file = (char *) malloc(sizeof(char)*payload_size);
-        // parse_object(payload);
-        fprintf(stderr, "200 OK :D\n");
-        FILE *fptr;
-        if ((fptr = fopen("imagen.jpg", "wb")) == NULL)
-        {
-            printf("Error! opening file");
+        // // char * file = (char *) malloc(sizeof(char)*payload_size);
+        // // parse_object(payload);
+        // fprintf(stderr, "200 OK :D\n");
+        // FILE *fptr;
+        // if ((fptr = fopen("imagen.jpg", "wb")) == NULL)
+        // {
+        //     printf("Error! opening file");
 
-            // Program exits if the file pointer returns NULL.
-            exit(1);
-        }
-        fwrite(&buff, sizeof(buff), sizeof(buff)/sizeof(buff[0]), fptr);
-        // sizeof(x[0]), sizeof(x)/sizeof(x[0])
-        fclose(fptr); 
+        //     // Program exits if the file pointer returns NULL.
+        //     exit(1);
+        // }
+        // fwrite(&buff, sizeof(buff), sizeof(buff)/sizeof(buff[0]), fptr);
+        // // sizeof(x[0]), sizeof(x)/sizeof(x[0])
+        // fclose(fptr); 
     }
 
     ROUTE_POST("/test")
@@ -211,7 +224,9 @@ void route()
     ROUTE_POST("/image")
     {
         printf("HTTP/1.1 200 OK\r\n\r\n");
-        parse_object(payload);
+        // parse_object(payload);
+        fprintf(stderr, "200 OK :D%s\n", payload);
+        sleep(1);
     }
 
     ROUTE_END()

@@ -18,6 +18,25 @@
 #include "../header/base64.h"
 #include "../header/cJSON.h"
 
+#ifdef DISABLE_EXPECT
+/*
+  Using POST with HTTP 1.1 implies the use of a "Expect: 100-continue"
+  header.  You can disable this header with CURLOPT_HTTPHEADER as usual.
+  NOTE: if you want chunked transfer too, you need to combine these two
+  since you can only set one list of headers with CURLOPT_HTTPHEADER. */
+
+/* A less good option would be to enforce HTTP 1.0, but that might also
+   have other implications. */
+{
+    struct curl_slist *chunk = NULL;
+
+    chunk = curl_slist_append(chunk, "Expect:");
+    res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
+    /* use curl_slist_free_all() after the *perform() call to free this
+       list again */
+}
+#endif
+
 int main()
 {
 
@@ -25,7 +44,7 @@ int main()
 
     int width, height, channels;
 
-    unsigned char *img = stbi_load("dog.jpg", &width, &height, &channels, 0);
+    unsigned char *img = stbi_load("imagen.jpg", &width, &height, &channels, 0);
     if (img == NULL)
     {
         printf("error al cargar la imagen \n");
@@ -51,8 +70,8 @@ int main()
     // cJSON_AddStringToObject(json, "content-base64", "10101010101010101010dwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3u");
     cJSON_AddStringToObject(json, "content-base64", base64);
 
-    char *jsonString = cJSON_Print(json);
-    printf("%s", jsonString);
+    char *jsonString = cJSON_PrintUnformatted(json);
+    // printf("%s", jsonString);
 
     CURL *curl;
     CURLcode res;
@@ -67,13 +86,20 @@ int main()
         /* First set the URL that is about to receive our POST. This URL can
            just as well be a https:// URL if that is what should receive the
            data. */
-        curl_easy_setopt(curl, CURLOPT_URL, "http://20.39.51.23:5000/");
+        // curl_easy_setopt(curl, CURLOPT_URL, "https://36e74342-b0bf-46de-9d0e-03158360dbd2.mock.pstmn.io/");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/image");
         /* Now specify the POST data */
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonString);
         curl_easy_setopt(curl, CURLOPT_MAXFILESIZE, 1000000);
+        curl_easy_setopt(curl, CURLOPT_VERBOSE, 1000000);
+        // Disable Expect: 100-continue
+        struct curl_slist *chunk = NULL;
+        chunk = curl_slist_append(chunk, "Expect:");
+        chunk = curl_slist_append(chunk, "Content-Type: application/json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
 
-        /* Perform the request, res will get the return code */
-        res = curl_easy_perform(curl);
+            /* Perform the request, res will get the return code */
+            res = curl_easy_perform(curl);
         /* Check for errors */
         if (res != CURLE_OK)
             fprintf(stderr, "curl_easy_perform() failed: %s\n",
@@ -96,3 +122,4 @@ int main()
 // -I/mingw64/include
 // gcc ImageServer.c ../source/base64.c ../source/cJSON.c -lm -o ImageServer -lcurl && ./ImageServer
 // sudo apt-get install libcurl4-openssl-dev
+

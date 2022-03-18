@@ -89,7 +89,7 @@ int main()
            data. */
         // curl_easy_setopt(curl, CURLOPT_URL, "https://36e74342-b0bf-46de-9d0e-03158360dbd2.mock.pstmn.io/");
         // curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/image");
-        curl_easy_setopt(curl, CURLOPT_URL, "http://20.39.51.23:5000/image");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://20.39.51.23:8080/image");
         /* Now specify the POST data */
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonString);
         curl_easy_setopt(curl, CURLOPT_MAXFILESIZE, 1000000);

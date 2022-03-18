@@ -57,19 +57,19 @@ int main(void) {
 
     /* Daemon-specific initialization goes here */
     
-    FILE *fptr;
+    // FILE *fptr;
 
     
 
-    /* The Big Loop */
-    while (1) {
-        /* Do some task here ... */
-        printf("success \n");
-        fptr = fopen("/home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/daemon/logs/texttest.txt","a");
-        fprintf(fptr, "success \n");
-        fclose(fptr);
-        sleep(3); /* wait 3 seconds */
-    }
+    // /* The Big Loop */
+    // while (1) {
+    //     /* Do some task here ... */
+    //     printf("success \n");
+    //     fptr = fopen("/home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/daemon/logs/texttest.txt","a");
+    //     fprintf(fptr, "success \n");
+    //     fclose(fptr);
+    //     sleep(3); /* wait 3 seconds */
+    // }
 
 
     

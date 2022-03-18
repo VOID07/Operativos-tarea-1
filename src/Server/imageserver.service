@@ -1,0 +1,13 @@
+[Unit]
+Description=image server service
+
+[Service]
+Type=forking
+ExecStart=/bin/bash /home/pablo/Documents/operativos/tarea1/startImageServer.sh
+ExecStop=/bin/bash /home/pablo/Documents/operativos/tarea1/killimageserver.sh
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

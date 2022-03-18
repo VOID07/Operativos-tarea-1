@@ -46,10 +46,11 @@ fprintf(stderr, "Got string: %s\n", filename->valuestring);
     
     char *image = (char *)malloc(sizeDecoded * sizeof(char));
 
-    int width, height, channels;
+    int width, height, channels, pixelNumber;
     width = cJSON_GetObjectItem(json, "width")->valueint;
     height = cJSON_GetObjectItem(json, "height")->valueint;
     channels = cJSON_GetObjectItem(json, "channels")->valueint;
+    pixelNumber = 
     // fprintf(stderr, "200 OK :D%lld\n", sizeDecoded);
 
     Base64decode(image, content);

@@ -13,104 +13,44 @@
 #include "header/cJSON.h"
 
 int main(int c, char **v)
+
 {
 
-    // /* Our process ID and Session ID */
-    // pid_t pid, sid;
+    // variables necesarias
+    FILE *fp;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-    // /* Fork off the parent process */
-    // pid = fork();
-    // if (pid < 0)
-    // {
-    //     exit(EXIT_FAILURE);
-    // }
-    // /* If we got a good PID, then
-    //        we can exit the parent process. */
-    // if (pid > 0)
-    // {
-    //     exit(EXIT_SUCCESS);
-    // }
+    // abre el archivo
 
-    // /* Change the file mode mask */
-    // umask(0);
+    fp = fopen("config.conf", "r");
 
-    // /* Open any logs here */
-
-    // /* Create a new SID for the child process */
-    // sid = setsid();
-    // if (sid < 0)
-    // {
-    //     /* Log the failure */
-    //     exit(EXIT_FAILURE);
-    // }
-
-    // /* Change the current working directory */
-    // if ((chdir("/")) < 0)
-    // {
-    //     /* Log the failure */
-    //     exit(EXIT_FAILURE);
-    // }
-
-    // /* Close out the standard file descriptors */
-    // close(STDIN_FILENO);
-    // close(STDOUT_FILENO);
-    // close(STDERR_FILENO);
-
-    t_port_val = (char *)malloc(MAXCHAR * sizeof(char));
-
-    lens = (int *)malloc(5 * sizeof(int));
-
-    FILE *fp = fopen("config.conf", "r");
-
+    // verifica si se pudo leer el archivo
     if (fp == NULL)
-    {
-        printf("Could not open file");
-        return 1;
-    }
+        exit(EXIT_FAILURE);
 
-    else
-    {
-        fgets(t_port_val, MAXCHAR, fp);
-    }
+    // lee la linea 1. la del puerto
+    read = getline(&line, &len, fp);
 
-    *lens = getlen(t_port_val);
+    char port[4];
+    strcpy(port, line + 5);
 
-    port = (char *)malloc(*lens * sizeof(char));
+    printf("%s \n", port);
 
-    int i = 0;
-    while (i < *lens)
-    {
-        port[i] = t_port_val[i];
-        i++;
-    }
-    i = 0;
-    while (i < *(lens + 1))
-    {
-        colores_path[i] = t_colores_val[i];
-        i++;
-    }
-    i = 0;
-    while (i < *(lens + 2))
-    {
-        histo_path[i] = t_histo_val[i];
-        i++;
-    }
-    i = 0;
-    while (i < *(lens + 3))
-    {
-        logs_path[i] = t_logs_val[i];
-        i++;
-    }
-    i = 0;
-    while (i < *(lens + 4))
-    {
-        pyS_path[i] = t_pyS_val[i];
-        i++;
-    }
+    // lee la linea 2. la direccion de la carpeta a utilizar para guardar
+    read = getline(&line, &len, fp);
+    char path[100];
+    strcpy(path, line + 7);
 
-    free(fp);
-    free(lens);
-    free(t_port_val);
+    printf("%s \n", path);
+
+    // cierra el archivo
+    fclose(fp);
+
+    // libera memoria
+    if (line)
+        free(line);
 
     // load_config();
     serve_forever(port);
@@ -145,45 +85,8 @@ void route()
     ROUTE_POST("/")
     {
 
-        
-        // printf("HTTP/1.1 100 Continue\r\n\r\n");
         printf("HTTP/2 200 \r\n\r\n");
-        // sleep(5);
-        // printf("Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n");
-        // printf("Content-Length: 202611\r\n");
-        // printf("Connection: keep-alive\r\n\r\n");
-        // printf("Connection: Keep-Alive\r\n\r\n");
-        // printf("Keep-Alive: timeout=300\r\n\r\n");
-        // printf("Completed upload\r\n");
-        // printf("Wow, seems that you POSTED %lld bytes: \n %s. \r\n", payload_size, payload);
-        // printf("Wow, seems that you POSTED %lld bytes: \n. \r\n", payload_size);
-        // payload = strtok(NULL, "\r\n");
-        // clean_string(payload);
-        // printf("%s \r\n", payload);
         fprintf(stderr, "200 OK :D%s\n", payload);
-        // unsigned char *buff = (unsigned char *)malloc(sizeof(char) * payload_size);
-
-        // payload = strtok(NULL, "\r\n");
-        // payload = strtok(NULL, "\r\n");
-        // buff = strtok(NULL, "\r\n");
-        // printf(" %s\n", payload);
-        // fprintf(stderr, "%s\r\n", payload);
-        // fprintf(stderr, "Image %s\r\n", buff);
-
-        // // char * file = (char *) malloc(sizeof(char)*payload_size);
-        // // parse_object(payload);
-        // fprintf(stderr, "200 OK :D\n");
-        // FILE *fptr;
-        // if ((fptr = fopen("imagen.jpg", "wb")) == NULL)
-        // {
-        //     printf("Error! opening file");
-
-        //     // Program exits if the file pointer returns NULL.
-        //     exit(1);
-        // }
-        // fwrite(&buff, sizeof(buff), sizeof(buff)/sizeof(buff[0]), fptr);
-        // // sizeof(x[0]), sizeof(x)/sizeof(x[0])
-        // fclose(fptr); 
     }
 
     ROUTE_POST("/test")
@@ -203,15 +106,9 @@ void route()
 
     ROUTE_POST("/image")
     {
-        
         printf("HTTP/1.1 200 OK\r\n\r\n");
-        
         printf("Todo bien\r\n");
-        
-        // fprintf(stderr, "200 OK :D%s\n", payload+payload_size-10);
         parse_object(payload);
-        // fprintf(stderr, "200 OK :D%s\n", payload);
-        // sleep(1);
     }
 
     ROUTE_END()

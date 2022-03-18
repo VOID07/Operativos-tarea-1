@@ -16,41 +16,37 @@ int main(int c, char **v)
 
 {
 
-    // variables necesarias
-    FILE *fp;
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
+   t_port_val = (char *)malloc(MAXCHAR * sizeof(char));
 
-    // abre el archivo
+    lens = (int *)malloc(5 * sizeof(int));
 
-    fp = fopen("config.conf", "r");
+    FILE *fp = fopen("config.txt", "r");
 
-    // verifica si se pudo leer el archivo
     if (fp == NULL)
-        exit(EXIT_FAILURE);
+    {
+        printf("Could not open file");
+        return 1;
+    }
 
-    // lee la linea 1. la del puerto
-    read = getline(&line, &len, fp);
+    else
+    {
+        fgets(t_port_val, MAXCHAR, fp);
+    }
 
-    char port[4];
-    strcpy(port, line + 5);
+    *lens = getlen(t_port_val);
 
-    printf("%s \n", port);
+    port = (char *)malloc(*lens * sizeof(char));
 
-    // lee la linea 2. la direccion de la carpeta a utilizar para guardar
-    read = getline(&line, &len, fp);
-    char path[100];
-    strcpy(path, line + 7);
+    int i = 0;
+    while (i < *lens)
+    {
+        port[i] = t_port_val[i];
+        i++;
+    }
 
-    printf("%s \n", path);
-
-    // cierra el archivo
-    fclose(fp);
-
-    // libera memoria
-    if (line)
-        free(line);
+    free(fp);
+    free(lens);
+    free(t_port_val);
 
     // load_config();
     serve_forever(port);

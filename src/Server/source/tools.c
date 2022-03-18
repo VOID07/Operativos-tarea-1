@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h> 
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "../header/stb_image.h"
 
@@ -24,7 +26,7 @@ int getlen(char line[])
 
 void parse_object(char *string)
 {
-    // clean_string(string);
+    clean_string(string);
     fprintf(stderr, "Entered parse\n");
     // fprintf(stderr, "200 OK :D%s\n", string+payload_size-10);
     cJSON *json = cJSON_Parse(string);
@@ -35,7 +37,7 @@ void parse_object(char *string)
     cJSON *content_base64 = NULL;
     filename = cJSON_GetObjectItem(json, "filename");
     // cJSON_GetStringValue
-    fprintf(stderr, "JSON parsed %s\n", cJSON_Print(filename));
+    fprintf(stderr, "JSON parsed %s\n", cJSON_PrintUnformatted(filename));
 
     fprintf(stderr, "Got string: %s\n", filename->valuestring);
     pixel = cJSON_GetObjectItem(json, "pixel");
@@ -70,12 +72,12 @@ int writeToLog(char *str)
     int strSize = strlen(timeNow);
     strcpy(log, timeNow);
     strcpy(log + strSize, "> ");
-    int strSize = strlen(log);
+    strSize = strlen(log);
     strcpy(log + strSize, str);
-    int strSize = strlen(log);
+    strSize = strlen(log);
     strcpy(log + strSize, "\r\n");
     fptr = fopen("/home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/daemon/logs/texttest.txt", "a");
-    fprintf(fptr, str);
+    fprintf(fptr, "%s", log);
     fclose(fptr);
 }
 

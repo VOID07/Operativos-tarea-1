@@ -70,7 +70,7 @@ int recv_timeout(int s, int timeout, char *buf)
     {
 
       total_size += size_recv;
-      
+
       // fprintf(stderr, "%d\n", cnt);
       // fprintf(stderr, "%s", chunk);
       strcpy(buf + cnt * CHUNK_SIZE, chunk);
@@ -149,6 +149,7 @@ void start_server(const char *port)
   hints.ai_family = AF_INET;
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE;
+  printf("Port is %sport:%s%s\n", "\033[92m", port, "\033[0m");
   if (getaddrinfo(NULL, port, &hints, &res) != 0)
   {
     perror("getaddrinfo() error");
@@ -209,8 +210,7 @@ void respond(int n)
   //  char *ptr;
   int buf_size = 10000000;
 
-  buf = malloc(buf_size);
-  memset(buf, '\0', buf_size);
+  buf = calloc(buf_size, sizeof(char));
   // rcvd = recv(clients[n], buf, buf_size, 0);
 
   rcvd = recv_timeout(clients[n], 1, buf);

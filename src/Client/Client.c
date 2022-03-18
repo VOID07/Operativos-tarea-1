@@ -44,7 +44,7 @@ int main()
 
     int width, height, channels;
 
-    unsigned char *img = stbi_load("figs.png", &width, &height, &channels, 0);
+    unsigned char *img = stbi_load("model.jpg", &width, &height, &channels, 0);
     // unsigned char *img = stbi_load("plat.jpg", &width, &height, &channels, 0);
     if (img == NULL)
     {
@@ -63,7 +63,7 @@ int main()
 
     cJSON *json = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(json, "filename", "figs.png");
+    cJSON_AddStringToObject(json, "filename", "figs.jpg");
     cJSON_AddNumberToObject(json, "pixel", 133);
     cJSON_AddNumberToObject(json, "width", width);
     cJSON_AddNumberToObject(json, "height", height);
@@ -88,8 +88,8 @@ int main()
            just as well be a https:// URL if that is what should receive the
            data. */
         // curl_easy_setopt(curl, CURLOPT_URL, "https://36e74342-b0bf-46de-9d0e-03158360dbd2.mock.pstmn.io/");
-        // curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/image");
-        curl_easy_setopt(curl, CURLOPT_URL, "http://20.39.51.23:8080/image");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/image");
+        // curl_easy_setopt(curl, CURLOPT_URL, "http://20.39.51.23:8080/image");
         /* Now specify the POST data */
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonString);
         curl_easy_setopt(curl, CURLOPT_MAXFILESIZE, 1000000);

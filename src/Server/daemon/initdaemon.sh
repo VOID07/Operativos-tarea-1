@@ -1,6 +1,7 @@
 #!/bin/sh
-../make clean && make
-rm daemon
+cd .. && pwd 
+make
+cd daemon && pwd
 gcc -o daemon daemon.c
 sudo cp imageserver.service /lib/systemd/system
 sudo systemctl daemon-reload

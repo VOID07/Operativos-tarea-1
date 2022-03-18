@@ -19,8 +19,9 @@ char *histo_path;
 char *logs_path;
 char *pyS_path;
 
+int writeToLog(char *str);
 int getlen(char line[]);
-void parse_object(char *string);
+int parse_object(char *string);
 void clean_string(char *string);
 
 #endif

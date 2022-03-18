@@ -15,7 +15,7 @@
 #include <sys/time.h>
 
 #define MAX_CONNECTIONS 1000
-#define CHUNK_SIZE 2048
+#define CHUNK_SIZE 1
 
 static int listenfd;
 int *clients;
@@ -61,6 +61,7 @@ int recv_timeout(int s, int timeout, char *buf)
     // strcpy(buf + cnt * CHUNK_SIZE, chunk);
     // fprintf(stderr, "%s",chunk);
     memset(chunk, '\0', CHUNK_SIZE); // clear the variable
+    
     if ((size_recv = recv(s, chunk, CHUNK_SIZE, 0)) < 0)
     {
       // if nothing was received then we want to wait a little before trying again, 0.1 seconds
@@ -73,8 +74,9 @@ int recv_timeout(int s, int timeout, char *buf)
 
       // fprintf(stderr, "%d\n", cnt);
       // fprintf(stderr, "%s", chunk);
+      // strcpy(buf + cnt * CHUNK_SIZE, chunk);
       strcpy(buf + cnt * CHUNK_SIZE, chunk);
-      fprintf(stderr, "%s", buf + cnt * CHUNK_SIZE);
+      // fprintf(stderr, "%s", buf + cnt * CHUNK_SIZE);
       cnt++;
       // printf("%s", chunk);
       // reset beginning time

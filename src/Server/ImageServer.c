@@ -102,9 +102,16 @@ void route()
 
     ROUTE_POST("/image")
     {
+        
         printf("HTTP/1.1 200 OK\r\n\r\n");
-        printf("Todo bien\r\n");
+        // printf("Connection: keep-alive\r\n\r\n");
+        // writeToLog("Pinche log");
+        clean_string(payload);
+        // printf("%s", payload);
+        // fprintf(stderr, "%s\n", payload);
+        writeToLog(payload);
         parse_object(payload);
+        printf("Todo bien\r\n");
     }
 
     ROUTE_END()

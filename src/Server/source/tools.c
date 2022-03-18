@@ -24,12 +24,22 @@ int getlen(char line[])
     return len;
 }
 
-void parse_object(char *string)
+int parse_object(char *value)
 {
-    clean_string(string);
-    fprintf(stderr, "Entered parse\n");
-    // fprintf(stderr, "200 OK :D%s\n", string+payload_size-10);
-    cJSON *json = cJSON_Parse(string);
+    // clean_string(value);
+    fprintf(stderr, "Starting parse\n");
+    // return 0;
+    // fprintf(stderr, "200 OK :D%s\n", value+payload_size-10);
+    cJSON *json = cJSON_Parse(value);
+     if (json == NULL)
+    {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr != NULL)
+        {
+            fprintf(stderr, "Error before: %s\n", error_ptr);
+        }
+        return 0;
+    }
     fprintf(stderr, "JSON parsed\n");
 
     cJSON *filename = NULL;
@@ -37,7 +47,7 @@ void parse_object(char *string)
     cJSON *content_base64 = NULL;
     filename = cJSON_GetObjectItem(json, "filename");
     // cJSON_GetStringValue
-    fprintf(stderr, "JSON parsed %s\n", cJSON_PrintUnformatted(filename));
+    // fprintf(stderr, "JSON parsed %s\n", cJSON_PrintUnformatted(filename));
 
     fprintf(stderr, "Got string: %s\n", filename->valuestring);
     pixel = cJSON_GetObjectItem(json, "pixel");
@@ -55,11 +65,13 @@ void parse_object(char *string)
 
     Base64decode(image, content);
     stbi_write_jpg(filename->valuestring, width, height, channels, image, 100);
+    
+    return 0;
 }
 
 int writeToLog(char *str)
 {
-
+    
     FILE *fptr;
     time_t rawtime;
     struct tm *timeinfo;
@@ -68,15 +80,17 @@ int writeToLog(char *str)
     timeinfo = localtime(&rawtime);
     timeNow = asctime(timeinfo);
     // printf("Current local time and date: %s", asctime(timeinfo));
-    char log[1000];
+    char *log = calloc(1000, sizeof(char));
     int strSize = strlen(timeNow);
     strcpy(log, timeNow);
     strcpy(log + strSize, "> ");
     strSize = strlen(log);
-    strcpy(log + strSize, str);
+    memcpy(log+strSize, str, 500);
+    strSize = strlen(log);
     strSize = strlen(log);
     strcpy(log + strSize, "\r\n");
-    fptr = fopen("/home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/daemon/logs/texttest.txt", "a");
+    fprintf(stderr, "Writing to log\n");
+    fptr = fopen("daemon/logs/log.txt", "a");
     fprintf(fptr, "%s", log);
     fclose(fptr);
 }
@@ -94,6 +108,6 @@ void clean_string(char *string) // Removes whitespaces from string
         if (*(string + i) != buggi & *(string + i) != '\n' & *(string + i) != ' ')
             string[j++] = string[i];
     string[j] = '\0';
-
+fprintf(stderr, "String is clean\n");
     // payload_size
 }

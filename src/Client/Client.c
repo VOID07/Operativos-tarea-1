@@ -42,10 +42,24 @@ int main()
 
     // lee el archivo de configuracion
 
+    int pixelValue;
+    char imagePath[200];
+pixelValue = 100;
+// *imagePath = "plat.jpg";
+    // espera la entrada del usuario, valor del pixel
+    printf("Ingrese un valor de pixel: \n");
+    scanf("%d", &pixelValue);
+
+    // espera la entrada del usuario, path de la imagen
+    printf("Ingrese el path de la imagen: \n");
+    scanf("%200s", imagePath);
+
+    printf("pixel: %d, path %s \n", pixelValue, imagePath);
+
     int width, height, channels;
 
-    unsigned char *img = stbi_load("paso2.png", &width, &height, &channels, 0);
-    // unsigned char *img = stbi_load("plat.jpg", &width, &height, &channels, 0);
+    unsigned char *img = stbi_load(imagePath, &width, &height, &channels, 0);
+    // unsigned char *img = stbi_load(imagePath, &width, &height, &channels, 0);
     if (img == NULL)
     {
         printf("error al cargar la imagen \n");
@@ -63,15 +77,17 @@ int main()
 
     cJSON *json = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(json, "filename", "figs.png");
-    cJSON_AddNumberToObject(json, "pixel", 133);
+    cJSON_AddStringToObject(json, "filename", imagePath);
+    cJSON_AddNumberToObject(json, "pixel", pixelValue);
     cJSON_AddNumberToObject(json, "width", width);
     cJSON_AddNumberToObject(json, "height", height);
     cJSON_AddNumberToObject(json, "channels", channels);
     // cJSON_AddStringToObject(json, "content-base64", "10101010101010101010dwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3ur8HjVCrA0puJnPCV27rS6BPo4CUVDcIdAWs4kfxajCZH8MIvwhOKsssssssssssssssssssssssssssssssssssssssssssHVwg9nQ3u");
     cJSON_AddStringToObject(json, "content-base64", base64);
 
-    char *jsonString = cJSON_PrintUnformatted(json);
+    char *jsonString = cJSON_Print(json);
+    int jsonSize = strlen(jsonString);
+    cJSON_AddNumberToObject(json, "size", jsonSize);
     // printf("%s", jsonString);
 
     CURL *curl;
@@ -88,8 +104,8 @@ int main()
            just as well be a https:// URL if that is what should receive the
            data. */
         // curl_easy_setopt(curl, CURLOPT_URL, "https://36e74342-b0bf-46de-9d0e-03158360dbd2.mock.pstmn.io/");
-        // curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/image");
-        curl_easy_setopt(curl, CURLOPT_URL, "http://20.39.51.23:3000/image");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/image");
+        // curl_easy_setopt(curl, CURLOPT_URL, "http://20.39.51.23:5001/image");
         /* Now specify the POST data */
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonString);
         curl_easy_setopt(curl, CURLOPT_MAXFILESIZE, 1000000);

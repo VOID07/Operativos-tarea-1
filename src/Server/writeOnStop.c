@@ -8,7 +8,7 @@ int main()
 {
     FILE *fptr;
     
-    fptr = fopen("/home/pablo/Documents/operativos/tarea1/texttest.txt","a");
+    fptr = fopen("/home/pablo/Documents/operativos/tarea1/log.txt","a");
     fprintf(fptr, "========================================== \n\n");
     fprintf(fptr, "ImageServer detenido  \n\n");
 

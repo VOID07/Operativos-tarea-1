@@ -6,6 +6,7 @@
         "stb_image_write.h": "c",
         "stb_image.h": "c",
         "base64.h": "c",
-        "httpd.h": "c"
+        "httpd.h": "c",
+        "sstream": "c"
     }
 }

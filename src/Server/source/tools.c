@@ -83,6 +83,11 @@ int writeToLog(char *str)
 
 void clean_string(char *string) // Removes whitespaces from string
 {
+    // char *current_pos = strchr(string,"�");
+    // while (current_pos) {
+    //     *current_pos = '/';
+    //     current_pos = strchr(current_pos,"�");
+    // }
     char buggi = *(string + 1);
     int j, n = (int)payload_size;
     for (int i = j = 0; i < n; i++)

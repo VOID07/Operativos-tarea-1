@@ -3,7 +3,7 @@ Description=image server service
 
 [Service]
 Type=forking
-ExecStart=/home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/ImageServer
+ExecStart=/bin/bash  /home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/daemon/startImageServer.sh
 ExecStop=/bin/bash /home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/daemon/killimageserver.sh
 Restart=on-failure
 RestartSec=10

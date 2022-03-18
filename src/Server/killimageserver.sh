@@ -1,2 +1,2 @@
 #!/bin/sh
-./home/pablo/Documents/operativos/tarea1/writeOnStop && killall daemon
+./home/PabloEsquivel/tarea1/Operativos-tarea-1/src/Server/writeOnStop && killall daemon
